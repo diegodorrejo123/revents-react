@@ -1,10 +1,10 @@
 import EventListItem from "./EventListItem";
 
-export default function EventList({events}) {
+export default function EventList({events, selectEvent, deleteEvent}) {
     return (
         <>
             {events.map(event => (
-                <EventListItem event={event} key={event.id} />
+                <EventListItem deleteEvent={deleteEvent} selectEvent={selectEvent} event={event} key={event.id} />
             ))}
         </>
     )

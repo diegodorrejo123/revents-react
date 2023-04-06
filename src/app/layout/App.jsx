@@ -5,13 +5,24 @@ import { useState } from "react";
 
 
 function App() {
+  const [selectedEvent, setSelectedEvent] = useState(null)
   const [formOpen, setFormOpen] = useState(false)
+
+  function handleSelectEvent(event){
+    setSelectedEvent(event)
+    setFormOpen(true)
+  }
+
+  function handleCreateFormOpen(){
+    setSelectedEvent(null)
+    setFormOpen(true)
+  }
 
   return (
     <>
-      <NavBar setFormOpen={setFormOpen} />
+      <NavBar setFormOpen={handleCreateFormOpen} />
       <Container className="main">
-        <EventDashboard setFormOpen={setFormOpen} formOpen={formOpen} />
+        <EventDashboard selectedEvent={selectedEvent} selectEvent={handleSelectEvent} setFormOpen={setFormOpen} formOpen={formOpen} />
       </Container>
     </>
   );
