@@ -2,7 +2,15 @@ import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
 import cuid from 'cuid'
 import { Link } from "react-router-dom";
-export default function EventForm({setFormOpen, createEvent, selectedEvent, updateEvent}) {
+import { useSelector, useDispatch } from 'react-redux';
+import { createEvent, updateEvent } from "../eventActions";
+
+
+
+
+export default function EventForm({ match, history }) {
+    const dispatch = useDispatch()
+    const selectedEvent = useSelector(state => state.event.events.find(x => x.id === match.params.id))
 
     const initialValue = selectedEvent ?? {
         title: '',
@@ -17,12 +25,11 @@ export default function EventForm({setFormOpen, createEvent, selectedEvent, upda
 
     function handleFormSubmit(){
         if(selectedEvent){
-            updateEvent({...selectedEvent, ...values})
-            setFormOpen(false)
-            return
+            dispatch(updateEvent({...selectedEvent, ...values}))
+        }else{
+            dispatch(createEvent({...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL: '/assets/user.png'}));
         }
-        createEvent({...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL: '/assets/user.png'});
-        setFormOpen(false)
+        history.push('/events')
     }
 
     function handleInputChange(e){
