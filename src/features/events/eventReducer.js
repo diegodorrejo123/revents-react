@@ -1,4 +1,3 @@
-import { DECREMENT_COUNTER } from '../sandbox/testReducer';
 import { sampleData } from './../../app/api/sampleData';
 import { CREATE_EVENT, DELETE_EVENT, UPDATE_EVENT } from './eventConstants';
 
